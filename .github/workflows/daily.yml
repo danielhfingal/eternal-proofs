@@ -4,6 +4,9 @@ on:
     - cron: '35 3 * * *'  # 03:35 UTC every day — Norn's breath, eternal
   workflow_dispatch:  # Manual test — like /healthz in fingal-fleet
 
+permissions:
+  contents: write  # Explicit GITHUB_TOKEN write — fixes 403 denied to github-actions[bot]
+
 jobs:
   weave-feed:
     runs-on: ubuntu-latest
