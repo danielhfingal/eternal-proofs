@@ -1,0 +1,23 @@
+name: Daily Soul Update
+on:
+  schedule:
+    - cron: '35 3 * * *'  # 03:35 UTC every day
+  workflow_dispatch:
+
+jobs:
+  update-feed:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+      - run: python update_feed.py
+      - name: Commit & Push
+        run: |
+          git config user.name "Daniel H. Fingal"
+          git config user.email "daniel@fingal.eu"
+          git add ETERNAL_FEED.txt
+          git commit -m "Daily soul update $(date -u)"
+          git push
